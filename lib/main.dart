@@ -79,11 +79,17 @@ class _MyAppState extends State<MyApp> {
                         width: double.infinity,
                         height: 50,
                         child: Card(
-                          elevation: 5,
-                          shadowColor: Colors.black,
-                          color: Colors.greenAccent[100],
-                          child: Center(child: Text(_files[Index])),
-                        ),
+                            elevation: 5,
+                            shadowColor: Colors.black,
+                            color: Colors.greenAccent[100],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Icon(Icons.image),
+                                Text(_files[Index]),
+                                Icon(Icons.close),
+                              ],
+                            )),
                       );
                     },
                   ),
