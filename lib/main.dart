@@ -13,10 +13,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  //final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _fileName;
   List<PlatformFile> _paths;
-  String _directoryPath;
+
   String _extension;
   bool _loadingPath = false;
   bool _multiPick = false;
@@ -27,7 +27,6 @@ class _MyAppState extends State<MyApp> {
   void _openFileExplorer() async {
     setState(() => _loadingPath = true);
     try {
-      _directoryPath = null;
       _paths = (await FilePicker.platform.pickFiles(
         type: _pickingType,
         allowMultiple: _multiPick,
@@ -47,6 +46,7 @@ class _MyAppState extends State<MyApp> {
       print(_paths.first.extension);
       _fileName = _paths != null ? _paths.map((e) => e.name).toString() : '...';
       _files.add(_fileName);
+      print(_files);
     });
   }
 
@@ -59,40 +59,35 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(
                 child: Text('Get documents'),
                 onPressed: _openFileExplorer,
               ),
-              SizedBox(
-                width: 300,
-                height: 100,
-                child: Expanded(
-                  //child: Text(_fileName.toString()),
-
-                  child: ListView.builder(
-                    itemCount: _files.length,
-                    itemBuilder: (BuildContext ctxt, int Index) {
-                      return SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: Card(
-                            elevation: 5,
-                            shadowColor: Colors.black,
-                            color: Colors.greenAccent[100],
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Icon(Icons.image),
-                                Text(_files[Index]),
-                                Icon(Icons.close),
-                              ],
-                            )),
-                      );
-                    },
-                  ),
+              Flexible(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _files.length,
+                  itemBuilder: (BuildContext ctxt, int index) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: Card(
+                          elevation: 5,
+                          shadowColor: Colors.black,
+                          color: Colors.greenAccent[100],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.image),
+                              Text(_files[index]),
+                              Icon(Icons.close),
+                            ],
+                          )),
+                    );
+                  },
                 ),
               )
             ],
