@@ -83,7 +83,19 @@ class _MyAppState extends State<MyApp> {
                             children: [
                               Icon(Icons.image),
                               Text(_files[index]),
-                              Icon(Icons.close),
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () {
+                                    print(index);
+
+                                    setState(() {
+                                      _files.removeAt(index);
+                                      //this._files.removeAt(index);
+                                    });
+                                  })
                             ],
                           )),
                     );
